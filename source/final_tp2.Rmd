@@ -1,0 +1,108 @@
+---
+title: "PNB Paribas Cardif Claims Management"
+---
+
+## Importing Packages 
+
+```{r echo = TRUE}
+rm(list=ls())
+```
+
+## Using 'h20' package for Random Forest 
+## Using the package 'data.table' for faster reading of the data
+
+```{r echo=FALSE, include = FALSE, warning=FALSE, message=FALSE}
+library(h2o) #use h2o pacakge for random forest
+library(data.table) #load data.table pacakge for faster reading data
+```
+
+```{r echo=TRUE}
+#library(h2o) use h2o pacakge for random forest
+#library(data.table) load data.table pacakge for faster reading data
+```
+
+## This function specifies the memory size for the H2O cloud
+We used -1 in order to use all available threads. 
+
+```{r echo = TRUE}
+h2o.init(nthreads=-1, max_mem_size = '8G')
+```
+
+## Load both files using fread for faster reading
+
+```{r echo = TRUE}
+dftrain<-fread("train.csv", stringsAsFactors=TRUE)   
+dftest<-fread("test.csv", stringsAsFactors=TRUE) 
+``` 
+
+## Convert data into 'h2o dataframe' for training model
+
+```{r echo = TRUE, warning=FALSE, message=FALSE,results='hide'}
+train <- as.h2o(dftrain, destination_frame="train.hex")
+test<-as.h2o(dftest, destination_frame="test.hex")
+``` 
+
+## Convert 'y' variable into factor
+
+```{r echo = TRUE}
+train$target<-as.factor(train$target)
+``` 
+
+## Split train dataset into train and validation dataset
+
+```{r echo = TRUE}
+splits<-h2o.splitFrame(train,0.8,destination_frames = c("trainSplit","validSplit"),seed=111111111)
+``` 
+
+## Model section:
+
+1.'h2o.randomForest' Random Forest function  
+2.'training_frame', the H2O frame for training  
+3.'validation_frame', the H2O frame for validation  
+4.'x=3:133', the predictor columns, by column index  
+5.'y=2', the target index (what we are predicting)  
+6. 'model_id', name the model in h2O  
+7. 'ntrees', Use a maximum of 300 trees to create the random forest model.    
+             The default is 50. We have increased it because we will let     
+             the early stopping criteria decide when the random forest is     
+             sufficiently accurate  
+8. 'stopping_rounds' and 'stopping_tolerance', Stop fitting new trees when the     
+             5-tree average is within 0.001 (default) of the prior 5-tree averages    
+10.'sample_rate', 80% row sampling  
+11.'seed=1000000', Set the random seed so that this can be reproduced  
+
+```{r echo = TRUE, warning=FALSE, message=FALSE,results='hide'}
+rf1 <- h2o.randomForest(training_frame = splits[[1]],        
+  validation_frame = splits[[2]],      
+  x=3:133,                    
+  y=2,                        
+  model_id = "randomforest",              
+  ntrees = 300,   
+  stopping_rounds =5,
+  stopping_tolerance = 0,
+  sample_rate = 0.9,          
+  seed = 1000000) 
+``` 
+
+## Print and summary of rf1: 
+
+```{r echo = TRUE}
+summary(rf1)
+h2o.logloss(rf1,valid=T)        
+h2o.logloss(rf1,train=T)
+``` 
+
+## Make predictions on test dataset
+
+```{r echo = TRUE,warning=FALSE,message=FALSE, results='hide'}
+final_pred<-as.data.frame(h2o.predict(object = rf1,newdata = test)) 
+``` 
+
+```{r echo = TRUE,warning=FALSE,message=FALSE} 
+head(final_pred,5)
+testIds<-as.data.frame(test$ID) 
+head(testIds, 5)
+results<-data.frame(cbind(testIds,final_pred$p1))
+head(results, 5)
+colnames(results)<-c("ID","PredictedProb")
+``` 
