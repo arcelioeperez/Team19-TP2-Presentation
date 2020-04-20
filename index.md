@@ -1,10 +1,12 @@
-## Welcome to my website
+## Group 19
 
-This is my website. 
+Na Chen 
+Nicolas Op de Beeck 
+Jacob Davis 
+Arcelio E. Perez
 
-### Website
+### Files to download
 
-This is it.
-Download R Code 
+Download R Code - tp2_final.R 
 <a href="source/tp2_final.R">tp2_final.R</a>
  
