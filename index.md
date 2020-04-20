@@ -1,9 +1,9 @@
 ## Group 19
 
-Na Chen 
-Nicolas Op de Beeck 
-Jacob Davis 
-Arcelio E. Perez
+Na Chen   
+Nicolas Op de Beeck   
+Jacob Davis   
+Arcelio E. Perez  
 
 ### Files to download
 
