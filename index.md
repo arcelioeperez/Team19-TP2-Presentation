@@ -8,4 +8,4 @@ This is it.
 Download R Code 
 <a href="source/tp2_final.R">tp2_final.R</a>
 
-[Markdown](https://github.com/arcelioeperez/website00/tree/master/newfile)
+[Markdown](https://github.com/arcelioeperez/website00/tree/master/newfile/index.html)
