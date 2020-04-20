@@ -7,6 +7,6 @@ This is my website.
 This is it.
 Download R Code 
 {% raw %}
-<button onclick="window.open('/website00/tp2_final.R')">Download</button>
+<button onclick="window.open('/source/tp2_final.R')">Download</button>
 {% endraw %}
 
