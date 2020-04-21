@@ -13,12 +13,14 @@ rm(list=ls())
 
 ```{r echo=FALSE, include = FALSE, warning=FALSE, message=FALSE}
 library(h2o) #use h2o pacakge for random forest
-library(data.table) #load data.table pacakge for faster reading data
+library(data.table) #load data.table pacakge for faster reading data 
+library(randomForest)
 ```
 
 ```{r echo=TRUE}
 #library(h2o) use h2o pacakge for random forest
-#library(data.table) load data.table pacakge for faster reading data
+#library(data.table) load data.table pacakge for faster reading data 
+#library(randomForest)
 ```
 
 ## This function specifies the memory size for the H2O cloud
@@ -63,11 +65,8 @@ splits<-h2o.splitFrame(train,0.8,destination_frames = c("trainSplit","validSplit
 5.'y=2', the target index (what we are predicting)  
 6. 'model_id', name the model in h2O  
 7. 'ntrees', Use a maximum of 300 trees to create the random forest model.    
-             The default is 50. We have increased it because we will let     
-             the early stopping criteria decide when the random forest is     
-             sufficiently accurate  
-8. 'stopping_rounds' and 'stopping_tolerance', Stop fitting new trees when the     
-             5-tree average is within 0.001 (default) of the prior 5-tree averages    
+             We have increased it because it will let the early stopping criteria decide  
+             when the random forest is sufficiently accurate    
 10.'sample_rate', 80% row sampling  
 11.'seed=1000000', Set the random seed so that this can be reproduced  
 
@@ -78,8 +77,6 @@ rf1 <- h2o.randomForest(training_frame = splits[[1]],
   y=2,                        
   model_id = "randomforest",              
   ntrees = 300,   
-  stopping_rounds =5,
-  stopping_tolerance = 0,
   sample_rate = 0.9,          
   seed = 1000000) 
 ``` 
