@@ -376,7 +376,8 @@ summary {
 <div id="using-the-package-data.table-for-faster-reading-of-the-data" class="section level2">
 <h2>Using the package ‘data.table’ for faster reading of the data</h2>
 <pre class="r"><code>#library(h2o) use h2o pacakge for random forest
-#library(data.table) load data.table pacakge for faster reading data</code></pre>
+#library(data.table) load data.table pacakge for faster reading data 
+#library(randomForest)</code></pre>
 </div>
 <div id="this-function-specifies-the-memory-size-for-the-h2o-cloud" class="section level2">
 <h2>This function specifies the memory size for the H2O cloud</h2>
@@ -385,14 +386,14 @@ summary {
 <pre><code>##  Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         58 minutes 36 seconds 
+##     H2O cluster uptime:         4 minutes 48 seconds 
 ##     H2O cluster timezone:       America/New_York 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.30.0.1 
-##     H2O cluster version age:    16 days  
-##     H2O cluster name:           H2O_started_from_R_aepzg_xts568 
+##     H2O cluster version age:    17 days  
+##     H2O cluster name:           H2O_started_from_R_aepzg_xsb140 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   6.31 GB 
+##     H2O cluster total memory:   6.41 GB 
 ##     H2O cluster total cores:    12 
 ##     H2O cluster allowed cores:  12 
 ##     H2O cluster healthy:        TRUE 
@@ -430,11 +431,8 @@ test&lt;-as.h2o(dftest, destination_frame=&quot;test.hex&quot;)</code></pre>
 5.’y=2’, the target index (what we are predicting)<br />
 6. ‘model_id’, name the model in h2O<br />
 7. ‘ntrees’, Use a maximum of 300 trees to create the random forest model.<br />
-The default is 50. We have increased it because we will let<br />
-the early stopping criteria decide when the random forest is<br />
-sufficiently accurate<br />
-8. ‘stopping_rounds’ and ‘stopping_tolerance’, Stop fitting new trees when the<br />
-5-tree average is within 0.001 (default) of the prior 5-tree averages<br />
+We have increased it because it will let the early stopping criteria decide<br />
+when the random forest is sufficiently accurate<br />
 10.’sample_rate’, 80% row sampling<br />
 11.’seed=1000000’, Set the random seed so that this can be reproduced</p>
 <pre class="r"><code>rf1 &lt;- h2o.randomForest(training_frame = splits[[1]],        
@@ -443,8 +441,6 @@ sufficiently accurate<br />
   y=2,                        
   model_id = &quot;randomforest&quot;,              
   ntrees = 300,   
-  stopping_rounds =5,
-  stopping_tolerance = 0,
   sample_rate = 0.9,          
   seed = 1000000) </code></pre>
 </div>
@@ -458,7 +454,7 @@ sufficiently accurate<br />
 ## Model Key:  randomforest 
 ## Model Summary: 
 ##   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-## 1             300                      300            32168790        20
+## 1             300                      300            32168786        20
 ##   max_depth mean_depth min_leaves max_leaves mean_leaves
 ## 1        20   20.00000       5508       9081  7623.96000
 ## 
@@ -547,11 +543,11 @@ sufficiently accurate<br />
 ## 
 ## Scoring History: 
 ##             timestamp   duration number_of_trees training_rmse
-## 1 2020-04-20 18:37:04  0.001 sec               0            NA
-## 2 2020-04-20 18:37:05  0.430 sec               1       0.49692
-## 3 2020-04-20 18:37:05  0.824 sec               2       0.49076
-## 4 2020-04-20 18:37:05  1.253 sec               3       0.48650
-## 5 2020-04-20 18:37:06  1.721 sec               4       0.48614
+## 1 2020-04-21 18:01:56  0.005 sec               0            NA
+## 2 2020-04-21 18:01:57  0.600 sec               1       0.49692
+## 3 2020-04-21 18:01:57  0.998 sec               2       0.49076
+## 4 2020-04-21 18:01:58  1.422 sec               3       0.48650
+## 5 2020-04-21 18:01:58  1.863 sec               4       0.48614
 ##   training_logloss training_auc training_pr_auc training_lift
 ## 1               NA           NA              NA            NA
 ## 2          5.54687      0.60363         0.79956       1.04649
@@ -579,40 +575,40 @@ sufficiently accurate<br />
 ## 
 ## ---
 ##              timestamp          duration number_of_trees training_rmse
-## 31 2020-04-20 18:38:46  1 min 42.234 sec             222       0.39416
-## 32 2020-04-20 18:38:54  1 min 49.298 sec             237       0.39384
-## 33 2020-04-20 18:39:01  1 min 56.854 sec             253       0.39355
-## 34 2020-04-20 18:39:09  2 min  4.839 sec             270       0.39324
-## 35 2020-04-20 18:39:18  2 min 13.855 sec             289       0.39291
-## 36 2020-04-20 18:39:24  2 min 19.505 sec             300       0.39269
+## 30 2020-04-21 18:03:41  1 min 44.541 sec             231       0.39399
+## 31 2020-04-21 18:03:48  1 min 51.704 sec             246       0.39369
+## 32 2020-04-21 18:03:56  1 min 59.703 sec             263       0.39342
+## 33 2020-04-21 18:04:04  2 min  8.050 sec             280       0.39306
+## 34 2020-04-21 18:04:13  2 min 16.956 sec             299       0.39271
+## 35 2020-04-21 18:04:15  2 min 18.347 sec             300       0.39269
 ##    training_logloss training_auc training_pr_auc training_lift
-## 31          0.47867      0.74356         0.89595       1.28550
-## 32          0.47747      0.74469         0.89667       1.28550
-## 33          0.47665      0.74574         0.89733       1.28407
-## 34          0.47559      0.74695         0.89792       1.28263
-## 35          0.47452      0.74811         0.89852       1.27833
-## 36          0.47401      0.74891         0.89888       1.28120
+## 30          0.47786      0.74417         0.89635       1.28550
+## 31          0.47704      0.74521         0.89697       1.28407
+## 32          0.47597      0.74630         0.89765       1.28120
+## 33          0.47521      0.74752         0.89815       1.27976
+## 34          0.47405      0.74886         0.89885       1.28120
+## 35          0.47401      0.74891         0.89888       1.28120
 ##    training_classification_error validation_rmse validation_logloss
-## 31                       0.22239         0.38917            0.46470
-## 32                       0.22105         0.38918            0.46475
-## 33                       0.22201         0.38915            0.46475
-## 34                       0.22182         0.38911            0.46468
-## 35                       0.22091         0.38909            0.46466
-## 36                       0.22246         0.38904            0.46454
+## 30                       0.22107         0.38920            0.46479
+## 31                       0.22200         0.38919            0.46484
+## 32                       0.22194         0.38915            0.46476
+## 33                       0.22158         0.38912            0.46469
+## 34                       0.22233         0.38904            0.46453
+## 35                       0.22246         0.38904            0.46454
 ##    validation_auc validation_pr_auc validation_lift
-## 31        0.76949           0.90909         1.29454
-## 32        0.76944           0.90900         1.29454
-## 33        0.76950           0.90895         1.28303
-## 34        0.76957           0.90897         1.28303
-## 35        0.76968           0.90893         1.28303
-## 36        0.76989           0.90914         1.28878
+## 30        0.76937           0.90902         1.29454
+## 31        0.76932           0.90881         1.29454
+## 32        0.76946           0.90889         1.28303
+## 33        0.76960           0.90900         1.28303
+## 34        0.76989           0.90916         1.28878
+## 35        0.76989           0.90914         1.28878
 ##    validation_classification_error
-## 31                         0.21548
-## 32                         0.21562
-## 33                         0.21562
-## 34                         0.21566
-## 35                         0.21579
-## 36                         0.21610
+## 30                         0.21483
+## 31                         0.21553
+## 32                         0.21570
+## 33                         0.21583
+## 34                         0.21570
+## 35                         0.21610
 ## 
 ## Variable Importances: (Extract with `h2o.varimp`) 
 ## =================================================
