@@ -6,7 +6,7 @@ Jacob Davis
 Arcelio E. Perez  
 
 ### R Markdown
-[Project - Presentation](https://arcelioeperez.github.io/Team19-TP2-Presentation/final_tp2.html) 
+[Project - Presentation](https://arcelioeperez.github.io/Team19-TP2-Presentation/final_tp2.html)   
 [Critique Section](https://arcelioeperez.github.io/Team19-TP2-Presentation/Critique_Section_ML2.html)
 
 ### Files to download  
