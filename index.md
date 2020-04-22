@@ -13,10 +13,10 @@ Arcelio E. Perez
 R Markdown  
 <a href="source/final_tp2.Rmd">final_tp2.Rmd</a>  
 Critique Section  
-<a href="source/Critique_Section_ML2.Rmd">Critique_Section_ML2.Rmd</a>
-Download R Code     
-<a href="source/tp2_finalv1.R">tp2_finalv1.R</a>  
-Data Found at:  
+<a href="source/Critique_Section_ML2.Rmd">Critique_Section_ML2.Rmd</a>  
+Download R Code       
+<a href="source/tp2_finalv1.R">tp2_finalv1.R</a>    
+Data Found at:    
 [Kaggle - BNP Paribas](https://www.kaggle.com/c/bnp-paribas-cardif-claims-management/data)
 
 
